@@ -1,0 +1,76 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Liste de tâches · Globe en Vue</title><style>
+:root{--fonce:#5E1349;--prune:#8C1E70;--clair:#F4E6EE;--rose:#C77BAA;--trame:#E8DCE5;--fond:#FAF6F8;--texte:#3C3C3C;--gris:#8A7A85;--ok:#2E7D4F;--ko:#B3261E;--bleu:#2F6DB3;--vert:#3C8D5A;--orange:#C77700}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--texte);background:var(--fond);font-size:15px;line-height:1.45}
+header{background:var(--fonce);color:#fff;padding:16px 22px}header .k{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#EAD3E3;font-weight:700}header h1{margin:4px 0 0;font-size:22px}
+main{max-width:1180px;margin:0 auto;padding:16px}
+.contexte{background:#fff;border-left:5px solid var(--prune);padding:12px 16px;margin-bottom:14px}
+.contexte h2{margin:0 0 6px;font-size:17px;color:var(--fonce)}.contexte ul{margin:6px 0 0;padding-left:20px}
+.etapes{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}.etapes span{padding:6px 12px;border-radius:16px;background:#fff;border:1px solid var(--trame);font-size:13px;color:var(--gris)}
+.etapes span.on{background:var(--prune);color:#fff;border-color:var(--prune)}.etapes span.fait{background:var(--clair);color:var(--fonce)}
+.grille{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:860px){.grille{grid-template-columns:1fr}}
+.panneau{background:#fff;border:1px solid var(--trame);border-radius:8px;padding:12px}
+.panneau h3{margin:0 0 10px;font-size:16px;color:var(--fonce)}
+.tache{border:1px solid var(--trame);border-radius:8px;padding:10px;margin-bottom:8px;background:#fff}
+.tache.placee{border-color:var(--prune);background:var(--clair)}.tache.fixe{background:#f3f0f2}
+.tache .nom{font-weight:700;color:var(--fonce)}.tache .nom input{width:100%;padding:6px;border:1px solid var(--trame);border-radius:4px;font:inherit}
+.ligne{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+select,button,input[type=text]{font:inherit}select{padding:5px;border:1px solid #cdbfc8;border-radius:4px;background:#fff}
+button{cursor:pointer;border:0;border-radius:6px;padding:7px 13px;background:var(--prune);color:#fff}
+button.sec{background:#fff;color:var(--prune);border:1px solid var(--prune)}button:disabled,select:disabled,input:disabled{opacity:.55;cursor:not-allowed}
+.badge{font-size:12px;padding:2px 8px;border-radius:10px;background:var(--trame);color:var(--fonce)}
+.prio{font-size:13px;color:var(--fonce)}
+.jour{position:relative;margin-left:52px;border-left:2px solid var(--trame)}
+.h{position:absolute;left:-52px;width:calc(100% + 52px);border-top:1px solid var(--trame);font-size:12px;color:var(--gris)}
+.h span{position:relative;top:-8px;background:#fff;padding-right:4px}
+.ev{position:absolute;left:6px;right:6px;border-radius:6px;padding:3px 8px;font-size:12.5px;color:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ev b{display:block;font-size:13px}.ev.c-tache{background:var(--prune)}.ev.c-casting{background:var(--bleu)}.ev.c-autre{background:var(--vert)}.ev.c-pause{background:#9a8c95}.ev.c-imprevu{background:var(--orange)}.ev.c-fixe{background:#7a6a74}
+.ev.chev{outline:3px solid var(--ko)}.ev .cloche{float:right}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.verif{background:#fff;border:1px solid var(--trame);border-radius:8px;padding:12px 16px}
+.verif li{margin:5px 0;list-style:none;padding-left:4px}.verif ul{padding-left:0;margin:6px 0}
+.ok{color:var(--ok)}.ko{color:var(--ko)}
+.bilan{background:var(--clair);border:2px solid var(--prune);border-radius:8px;padding:12px 16px;margin-top:12px}
+.reporte{font-size:13px;color:var(--gris);margin-top:6px}
+footer{text-align:center;font-size:12px;color:var(--gris);padding:16px}
+
+.col{background:#f3eef1;border-radius:8px;padding:10px;min-height:220px}.col h4{margin:0 0 8px;color:var(--fonce)}.kb{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.kb{grid-template-columns:1fr}}
+.carte{background:#fff;border-radius:6px;padding:8px 10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.12);font-size:14px}.carte .bt{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}.carte .bt button{padding:3px 8px;font-size:12px}
+.etq{display:inline-block;background:var(--ko);color:#fff;font-size:11px;border-radius:8px;padding:1px 7px;margin-bottom:4px}.ech{font-size:12px;color:var(--fonce)}
+.champ{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.champ input[type=text]{flex:1;min-width:220px;padding:7px;border:1px solid #cdbfc8;border-radius:4px}
+.todo li{list-style:none;margin:6px 0}.todo{padding-left:0}.fait{text-decoration:line-through;color:var(--gris)}.note{background:#FFF8E1;border-left:4px solid #E0B000;padding:6px 10px;margin:6px 0;font-size:14px}
+</style><script src="jspdf.umd.min.js"></script><script src="justif.js"></script></head><body><header><div class="k">Gestion du temps et des priorités · Module 9</div><h1>Liste de tâches · Globe en Vue</h1></header><main><div class="contexte"><h2>Vous êtes l'influenceur ou l'influenceuse de la chaîne « Globe en Vue »</h2><p>Vous préparez une vidéo sur votre prochain voyage au Portugal, à publier ce week-end.</p><ul>
+<li>Intitulez la page : <b>Globe en Vue</b> (précédé de la date si vous le souhaitez).</li>
+<li>Ajoutez ces 4 tâches : écrire le script de la vidéo Portugal (intro + 2 sections) · répondre à 3 commentaires sur la dernière vidéo · vérifier les horaires de vol pour Lisbonne · contacter une marque pour un partenariat.</li>
+<li>Cochez « Répondre à 3 commentaires » : c'est fait.</li>
+<li>Dans <b>Notes rapides</b>, notez une idée façon bullet journal, par exemple : « Idée : filmer le lever de soleil à Sintra pour l'intro ».</li></ul></div>
+<div class="grille"><div class="panneau"><div class="champ"><label>Titre de la page <input type="text" id="titre" placeholder="Titre de la page"></label></div>
+<h3>Tâches du jour</h3><div class="champ"><input type="text" id="nt" placeholder="Nouvelle tâche"><button id="bt">Ajouter</button></div><ul class="todo" id="todo"></ul></div>
+<div class="panneau"><h3>Notes rapides</h3><div class="champ"><input type="text" id="nn" placeholder="Une idée, une info à garder"><button id="bn">Ajouter la note</button></div><div id="notes"></div></div></div>
+<div class="actions"><button id="btnVerif">Vérifier</button><button class="sec" id="btnReset">Recommencer l'exercice</button></div><div id="retour"></div></main>
+<footer>TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</footer><script>
+const $=s=>document.querySelector(s); let valide=false;
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+function afficherVerif(res,bilan){const tout=res.every(r=>r[0]);JUSTIF.essais++;let h=`<div class="verif"><b>Vérification</b><ul>${res.map(r=>`<li class="${r[0]?'ok':'ko'}">${r[0]?'✔':'✘'} ${r[1]}</li>`).join('')}</ul></div>`;
+ if(tout){valide=true;rendre();$('#btnVerif').disabled=true;$('#btnVerif').textContent='Atelier validé';h+=`<div class="bilan">${bilan}</div>`;} else h+='<p class="ko">Corrigez les points signalés, puis vérifiez à nouveau.</p>';$('#retour').innerHTML=h;if(tout){JUSTIF.sections=[{titre:'Votre travail',lignes:etatTravail()},{titre:'Vérification',commentaires:res.map(r=>({ok:r[0],txt:r[1]})),bilan}];JUSTIF.bouton('#retour');}}
+let L=[],N=[];
+function init(){JUSTIF.vider();L=[];N=[];valide=false;$('#titre').value='';$('#retour').innerHTML='';$('#btnVerif').disabled=false;$('#btnVerif').textContent='Vérifier';rendre();}
+function rendre(){['titre','nt','bt','nn','bn'].forEach(i=>$('#'+i).disabled=valide);
+ $('#todo').innerHTML=L.map((t,i)=>`<li><label><input type="checkbox" data-i="${i}" ${t.f?'checked':''} ${valide?'disabled':''}> <span class="${t.f?'fait':''}">${t.t}</span></label> ${valide?'':`<button class="sec" data-x="${i}" style="padding:2px 8px;font-size:12px">Supprimer</button>`}</li>`).join('');
+ $('#notes').innerHTML=N.map(n=>`<div class="note">✎ ${n}</div>`).join('');
+ document.querySelectorAll('#todo input').forEach(c=>c.onchange=()=>{L[+c.dataset.i].f=c.checked;rendre();});
+ document.querySelectorAll('#todo [data-x]').forEach(b=>b.onclick=()=>{L.splice(+b.dataset.x,1);rendre();});}
+$('#bt').onclick=()=>{const t=$('#nt').value.trim();if(t){L.push({t,f:false});$('#nt').value='';rendre();}};
+$('#bn').onclick=()=>{const t=$('#nn').value.trim();if(t){N.push(t);$('#nn').value='';rendre();}};
+const tr=m=>L.find(t=>m.some(x=>norm(t.t).includes(x)));
+$('#btnVerif').onclick=()=>{const sc=tr(['script']),co=tr(['commentaire']),vo=tr(['vol','lisbonne']),pa=tr(['marque','partenariat']);
+ const r=[[norm($('#titre').value).includes('globe en vue'),'La page porte le nom de la chaîne.'],
+ [!!(sc&&co&&vo&&pa),'Les quatre tâches sont dans la liste.'],
+ [!!co&&co.f&&L.filter(t=>t.f).length===1,'Seule la réponse aux commentaires est cochée.'],
+ [N.length>=1,'Une note rapide est enregistrée.']];
+ afficherVerif(r,'<b>Liste prête.</b> La combinaison liste de tâches + notes rapides vous convient-elle ? La liste dit quoi faire ; les notes gardent les idées au vol, sans encombrer la liste.');};
+function etatTravail(){return ['Titre de la page : '+($('#titre').value||'(vide)'),'Tâches :',...L.map(t=>(t.f?'[fait] ':'[à faire] ')+t.t),'Notes rapides :',...(N.length?N:['(aucune)'])];}
+$('#btnReset').onclick=()=>{if(confirm("Recommencer tout l'exercice ? Vos réponses seront effacées.")){init();}};
+init();
+</script></body></html>
